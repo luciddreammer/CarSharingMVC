@@ -1,0 +1,56 @@
+﻿@model CarSharing.Models.Car;
+
+@using(Html.BeginForm("AddCar","CarManager",FormMethod.Post))
+{
+        <h2>Add new Car:</h2>
+        <div class = "form-group col-sm-3">
+             @Html.LabelFor(x => x.brand,labelText:"Brand")
+            @Html.TextBoxFor(x => x.brand, new{placeholder = "Brand", @class = "form-control"})
+            @if(AddCarErrors.brandError==true)
+                {
+                    <p style="color:red">Can't be empty</p>        
+                }
+            &nbsp;
+        </div>
+         <div class = "form-group col-sm-3">
+             @Html.LabelFor(x => x.model,labelText:"Model")
+            @Html.TextBoxFor(x => x.model, new{placeholder = "Model", @class = "form-control"})
+            @if(AddCarErrors.modelError==true)
+            {
+                    <p style="color:red">Can't be empty</p>        
+            }
+        &nbsp;
+        </div>
+        <div class = "form-group col-sm-3">
+             @Html.LabelFor(x => x.engine,labelText:"Engine")
+            @Html.TextBoxFor(x => x.engine, new{placeholder = "Engine", @class = "form-control"})
+            @if(AddCarErrors.engineError==true)
+                {
+                    <p style="color:red">Can't be empty</p>         
+                }
+                @if(RegisterErrors.emailExists==true)
+                {
+                    <p style="color:red">Email already exists</p>
+                }
+            &nbsp;
+        </div>
+        <div class = "form-group col-sm-3">
+             @Html.LabelFor(x => x.color,labelText:"Color")
+            @Html.TextBoxFor(x => x.color, new{placeholder = "Color", @class = "form-control"})
+            @if(AddCarErrors.colorError==true)
+                {
+                    <p style="color:red">Can't be empty</p>        
+                }
+            &nbsp;
+        </div>
+        <div class = "form-group col-sm-3">
+             @Html.LabelFor(x => x.additionalEquipment,labelText:"Additional Equipment")
+            @Html.TextBoxFor(x => x.additionalEquipment, new{placeholder = "Additional Equipment", @class = "form-control"})
+            @if(AddCarErrors.eqError==true)
+                {
+                    <p style="color:red">Can't be empty</p>         
+                }
+            &nbsp;
+        </div>
+        <button type ="submit" class = "btn btn-primary"> Add Car </button>
+}

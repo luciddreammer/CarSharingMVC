@@ -1,0 +1,78 @@
+﻿@model CarSharing.Models.Customer;
+
+@using(Html.BeginForm("RegisterNewUser","Register",FormMethod.Post))
+{
+        <h2>Register Form</h2>
+        <div class = "form-group col-sm-3">
+             @Html.LabelFor(x => x.login,labelText:"Login:")
+            @Html.TextBoxFor(x => x.login, new{placeholder = "Login", @class = "form-control"})
+            @if(RegisterErrors.loginError==true)
+            {
+                    <p style="color:red">Login can't be empty, and must be only letters and digits</p>        
+            }
+            @if(RegisterErrors.loginExists==true)
+            {
+                <p style="color:red">Login already exists</p>
+            }
+        &nbsp;
+        </div>
+        <div class = "form-group col-sm-3">
+             @Html.LabelFor(x => x.password,labelText:"Password:")
+            @Html.TextBoxFor(x => x.password, new{@type="password", placeholder = "Password", @class = "form-control"})
+            @if(RegisterErrors.passwordError==true)
+                {
+                    <p style="color:red">Password can't be empty</p>        
+                }
+            &nbsp;
+        </div>
+        <div class = "form-group col-sm-3">
+             @Html.LabelFor(x => x.email,labelText:"Email")
+            @Html.TextBoxFor(x => x.email, new{placeholder = "Email", @class = "form-control"})
+            @if(RegisterErrors.emailError==true)
+                {
+                    <p style="color:red">Email can't be empty, and must be in proper format</p>        
+                }
+                @if(RegisterErrors.emailExists==true)
+                {
+                    <p style="color:red">Email already exists</p>
+                }
+            &nbsp;
+        </div>
+        <div class = "form-group col-sm-3">
+             @Html.LabelFor(x => x.name,labelText:"Name")
+            @Html.TextBoxFor(x => x.name, new{placeholder = "Name", @class = "form-control"})
+            @if(RegisterErrors.nameError==true)
+                {
+                    <p style="color:red">Name can't be empty, and must be only letters</p>        
+                }
+            &nbsp;
+        </div>
+        <div class = "form-group col-sm-3">
+             @Html.LabelFor(x => x.city,labelText:"Adress")
+            @Html.TextBoxFor(x => x.city, new{placeholder = "City", @class = "form-control"})
+            @if(RegisterErrors.cityError==true)
+                {
+                    <p style="color:red">City can't be empty, and must be only letters</p>        
+                }
+            &nbsp;
+        </div>
+        <div class = "form-group col-sm-3">
+             @Html.LabelFor(x => x.phone,labelText:"Phone")
+            @Html.TextBoxFor(x => x.phone, new{placeholder = "Phone", @class = "form-control"})
+            @if(RegisterErrors.phoneError==true)
+                {
+                    <p style="color:red">Phone can't be empty, and must be only digits</p>        
+                }
+            &nbsp;
+        </div>
+        <div class = "form-group col-sm-3">
+             @Html.LabelFor(x => x.dateOfBirth,labelText:"Date of birth:")
+            @Html.TextBoxFor(x => x.dateOfBirth,  new{@type="date", placeholder = "Date of birth", @class = "form-control"})
+            @if(RegisterErrors.dateOfBirthError==true)
+                {
+                    <p style="color:red">Date of birth can't be empty, and You must be at least 18 years old</p>        
+                }
+            &nbsp;
+        </div>
+        <button type ="submit" class = "btn btn-primary"> Register </button>
+}

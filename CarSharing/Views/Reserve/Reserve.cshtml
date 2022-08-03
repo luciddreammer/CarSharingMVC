@@ -1,0 +1,45 @@
+﻿@model CarSharing.Models.Car;
+<div>
+    <h1> Your selected car:</h1>
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            <p>Brand</p>
+        </th>
+        <th>
+            <p>Model</p>
+        </th>
+        <th>
+            <p>Engine</p>
+        </th>
+        <th>
+            <p>Color</p>
+        </th>
+        <th>
+            <p>Additional Equipment</p>
+        </th>
+    </tr>
+    @*Zakomentowane na czas ogarniecia bazy danych!*@
+     <tr>
+        <td>@Model.brand</td>
+        <td>@Model.model</td>
+        <td>@Model.engine</td>
+        <td>@Model.color</td>
+        <td>@Model.additionalEquipment</td>
+     </tr>       
+</table>
+@Html.Partial("ReservationForm", new CarSharing.Models.Relation(@Model.id))
+<div id="container">
+    <div id="div1">
+        <br />
+        <h3>
+        <b id="text">Select another car</b>
+        </h3>
+         @*<button>*@
+             <a class="btn btn-primary" asp-action="ListOfCars" asp-controller="ListOfCars">Car list</a>
+        @*</button> *@   
+    </div>
+</div>
+

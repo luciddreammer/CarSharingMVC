@@ -1,0 +1,21 @@
+﻿@model CarSharing.Models.Customer
+
+@using(Html.BeginForm("LoginUser","Login",FormMethod.Post))
+    {
+            <h2>Login</h2>
+            <div class = "form-group col-sm-3">
+                 @Html.LabelFor(x => x.login,labelText:"Login:")
+                @Html.TextBoxFor(x => x.login, new{placeholder = "Login", @class = "form-control"})
+            &nbsp;
+            </div>
+            <div class = "form-group col-sm-3">
+                 @Html.LabelFor(x => x.password,labelText:"Password:")
+                @Html.TextBoxFor(x => x.password, new{@type="password", placeholder = "Password", @class = "form-control"})
+                @if(LoginFlags.passwordError==true || LoginFlags.loginError==true)
+                    {
+                        <p style="color:red">Wrong login or password</p>        
+                    }
+                &nbsp;
+            </div>
+            <button type ="submit" class = "btn btn-primary"> Login </button>
+    }    

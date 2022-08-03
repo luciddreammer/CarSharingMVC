@@ -1,0 +1,80 @@
+﻿@model CarSharing.Models.ListOfCars;
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/css/StyleSheet.css" rel="stylesheet" type="text/css" />
+
+<div>
+    <h1> List of our cars:</h1>
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            <p>Brand</p>
+        </th>
+        <th>
+            <p>Model</p>
+        </th>
+        <th>
+            <p>Engine</p>
+        </th>
+        <th>
+            <p>Color</p>
+        </th>
+        <th>
+            <p>Additional Equipment</p>
+        </th>
+        <th>
+            <p>Rented From</p>
+        </th>
+         <th>
+            <p>Rented To</p>
+        </th>
+        <th>
+            <p>Reserve</p>
+        </th>
+    </tr>
+    @if(Model.listOfCars!=null)
+    {
+        foreach(var element in Model.listOfCars)
+        {
+            <tr>
+                <td>@element.brand</td>
+                <td>@element.model</td>
+                <td>@element.engine</td>
+                <td>@element.color</td>
+                <td>@element.additionalEquipment</td>
+                <td>
+                <table>
+                @foreach(var rel in element.relations)
+                {
+                        <tr>
+                            <td>@rel.reservation.rentedFrom</td>
+                        </tr>
+                }
+                </table>
+                </td>
+                <td>
+                <table>
+               @foreach(var rel in element.relations)
+                {
+                        <tr>
+                            <td>@rel.reservation.rentedTo</td>
+                        </tr>
+                }
+                </table>
+                </td>
+                <td>
+                    <a class="btn btn-primary" href="@Url.Action("Reserve", "Reserve", new {carId = @element.id})" >Reserve</a>
+                </td>
+                    
+            </tr>
+        }
+    }
+</table>
+
+
+ 
+

@@ -1,0 +1,82 @@
+﻿@model CarSharing.Models.ListOfCars;
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/css/StyleSheet.css" rel="stylesheet" type="text/css" />
+
+<div>
+    <h1> List of our cars:</h1>
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            <p>Brand</p>
+        </th>
+        <th>
+            <p>Model</p>
+        </th>
+        <th>
+            <p>Engine</p>
+        </th>
+        <th>
+            <p>Color</p>
+        </th>
+        <th>
+            <p>Additional Equipment</p>
+        </th>
+        <th>
+            <p>Is rented</p>
+        </th>
+        <th>
+            <p>Rented From</p>
+        </th>
+        <th>
+            <p>Rented To</p>
+        </th>
+    </tr>
+
+    @if(Model.listOfCars!=null)
+    {
+        foreach(var element in Model.listOfCars)
+        {
+            <tr>
+                <td>@element.brand</td>
+                <td>@element.model</td>
+                <td>@element.engine</td>
+                <td>@element.color</td>
+                <td>@element.additionalEquipment</td>
+                @*Zakomentowane na czas ogarniecia bazy danych!*@
+                @*<td>@element.rentedStatus</td>
+                @if(element.rentedStatus==true)
+                {
+                    <td>@element.rentedFrom</td>
+                    <td>@element.rentedTo</td>
+                }
+                else
+                {
+                    <td></td>
+                    <td></td>
+                }*@
+            </tr>
+        }
+    }
+</table>
+
+<div id="container">
+    <div id="div1">
+        <b id="text">Login to select a car!</b>
+        <br />
+            <a class="btn btn-primary" asp-action="Login" asp-controller="Login" >Login</a>
+    </div>
+    <div id="space"></div>
+    <div id="div2">
+        <b id="text">Don't have account? Register now!</b>
+        <br />
+            <a class="btn btn-primary" asp-action="Register" asp-controller="Register">Register</a>
+    </div>
+</div>
+
+ 
+
