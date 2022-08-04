@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 
-namespace CarSharing.Models
+namespace CarSharing.Models.DataBaseModels
 
 {
     public class Relation

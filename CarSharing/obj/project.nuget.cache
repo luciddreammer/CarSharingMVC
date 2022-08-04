@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "GOQRT2+qAt3CW2EqJRh8eNovztJofABZUCePHOZSeqk666VUGrN8QbUYFcb2kxKsbxUR66TvOdQXAwaY6v3yuw==",
+  "dgSpecHash": "+sjznzhPDOMJW8xjY60tAgUuMgZJ+sU1qn7ZFnJHDpG0V3PeCgzw29jteYNO/rH9PkKBhZsuDCSOqRvybEXYEw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Szymon\\Desktop\\CarSharing\\CarSharing\\CarSharing\\CarSharing.csproj",
+  "projectFilePath": "C:\\Users\\Szymon\\Desktop\\carsharingmvc\\CarSharing\\CarSharing\\CarSharing.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Szymon\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Szymon\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",

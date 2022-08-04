@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CarSharing.Models.DataBaseModels;
+using System.ComponentModel.DataAnnotations;
 
-namespace CarSharing.Models
+namespace CarSharing.Models.DataBaseModels
 {
     public class Customer
     {
@@ -10,8 +11,8 @@ namespace CarSharing.Models
         public string email { get; set; }
         public string phone { get; set; }
         public string city { get; set; }
-        public int age { get; set; }
         public DateTime dateOfBirth { get; set; }
+        public int age { get; set; }
         public string login { get; set; }
         public string password { get; set; }
         public bool premiumStatus { get; set; }
@@ -20,4 +21,5 @@ namespace CarSharing.Models
         public double cookieId { get; set; }
         public List<Relation> relations = new List<Relation>();
     }
+
 }

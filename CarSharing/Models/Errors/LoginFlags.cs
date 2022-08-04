@@ -1,4 +1,4 @@
-﻿namespace CarSharing.Models
+﻿namespace CarSharing.Models.Errors
 {
     public class LoginFlags
     {

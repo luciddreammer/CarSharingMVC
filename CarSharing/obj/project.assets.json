@@ -9662,19 +9662,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Szymon\\.nuget\\packages\\": {}
+    "C:\\Users\\Szymon\\.nuget\\packages\\": {},
+    "D:\\MSV\\Tools\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Szymon\\Desktop\\CarSharing\\CarSharing\\CarSharing\\CarSharing.csproj",
+      "projectUniqueName": "C:\\Users\\Szymon\\Desktop\\carsharingmvc\\CarSharing\\CarSharing\\CarSharing.csproj",
       "projectName": "CarSharing",
-      "projectPath": "C:\\Users\\Szymon\\Desktop\\CarSharing\\CarSharing\\CarSharing\\CarSharing.csproj",
+      "projectPath": "C:\\Users\\Szymon\\Desktop\\carsharingmvc\\CarSharing\\CarSharing\\CarSharing.csproj",
       "packagesPath": "C:\\Users\\Szymon\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Szymon\\Desktop\\CarSharing\\CarSharing\\CarSharing\\obj\\",
+      "outputPath": "C:\\Users\\Szymon\\Desktop\\carsharingmvc\\CarSharing\\CarSharing\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "D:\\MSV\\Tools\\NuGetPackages"
+      ],
       "configFilePaths": [
         "C:\\Users\\Szymon\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -9741,7 +9746,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
       }
     }
   }

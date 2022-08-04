@@ -1,4 +1,6 @@
-﻿namespace CarSharing.Models
+﻿using CarSharing.Models.DataBaseModels;
+
+namespace CarSharing.Models
 {
     public class ListOfCars
     {

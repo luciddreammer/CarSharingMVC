@@ -1,107 +1,40 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using CarSharing.Models;
+using CarSharing.Models.ViewModels;
 using System.Diagnostics;
-using System.Text.RegularExpressions;
+using CarSharing.ModelServices;
+using CarSharing.Models.Errors;
+using CarSharing.Models.DataBaseModels;
+using CarSharing.Models;
+using CarSharing.Models.Helper;
+
 
 namespace CarSharing.Controllers
 {
     public class RegisterController : Controller
     {
-        private CarSharingContext _context;
+        RegisterValidationHelper validationHelper;
+        CustomerServices customerServices;
 
-        public RegisterController(CarSharingContext context)
+        public RegisterController(CustomerServices customerService) //Dependency injection
         {
-            _context = context;
-        }
-        public IActionResult Register(Customer customer)
-        {
-            return View(customer);
+            this.customerServices = customerService;
         }
 
-        public bool EmailValidation(Customer customer)
+        public IActionResult Register(RegisterViewModel registerCustomer)
         {
-            Regex emailRegex = new Regex(@"^((\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*))", RegexOptions.IgnoreCase);
-
-            return emailRegex.IsMatch(customer.email);
-        }
-        public bool RegisterVerification(Customer customer)
-        {
-            RegisterErrors.nameError = false;
-            RegisterErrors.passwordError = false;
-            RegisterErrors.loginError = false;
-            RegisterErrors.dateOfBirthError = false;
-            RegisterErrors.phoneError = false;
-            RegisterErrors.emailError = false;
-            RegisterErrors.cityError = false;
-            RegisterErrors.loginExists = false;
-            RegisterErrors.emailExists = false;
-            bool isError = false;
-            if (string.IsNullOrEmpty(customer.login) || !customer.login.All(char.IsLetterOrDigit))
-            {
-                RegisterErrors.loginError = true;
-                isError = true;
-            }
-            var existingLogin = _context.Customers.FirstOrDefault(c => c.login == customer.login);
-            if(existingLogin != null)
-            {
-                RegisterErrors.loginExists = true;
-                isError = true;
-            }
-            if (string.IsNullOrEmpty(customer.password))
-            {
-                RegisterErrors.passwordError = true;
-                isError = true;
-            }
-            if (string.IsNullOrEmpty(customer.email) || !EmailValidation(customer))
-            {
-                RegisterErrors.emailError = true;
-                isError = true;
-            }
-            var existingEmail = _context.Customers.FirstOrDefault(c => c.email == customer.email);
-            if( existingEmail != null)
-            {
-                RegisterErrors.emailExists = true;
-                isError = true;
-            }
-            if (string.IsNullOrEmpty(customer.name) || !customer.name.All(char.IsLetter))
-            {
-                RegisterErrors.nameError = true;
-                isError = true;
-            }
-            if (string.IsNullOrEmpty(customer.city) || !customer.city.All(char.IsLetter))
-            {
-                RegisterErrors.cityError = true;
-                isError = true;
-            }
-            if (string.IsNullOrEmpty(customer.phone) || !customer.phone.All(char.IsDigit))
-            {
-                RegisterErrors.phoneError = true;
-                isError = true;
-            }
-            if (DateTime.Now.Year-customer.dateOfBirth.Year <18 || customer.dateOfBirth.Year==0001)
-            {
-                RegisterErrors.dateOfBirthError = true;
-                isError = true;
-            }
-            if(isError)
-            {
-                return false;
-            }
-            return true;
+            return View(registerCustomer);
         }
 
         [HttpPost]
-        public ActionResult RegisterNewUser(Customer customer)
+        public ActionResult RegisterNewUser(RegisterViewModel registerCustomer)
         {
-            if(!RegisterVerification(customer))
+            Customer customer = new Customer();
+            if (!validationHelper.RegisterVerification(registerCustomer))
             {
-                return RedirectToAction("Register", customer);
+                return RedirectToAction("Register", registerCustomer);
             }
-            customer.age = DateTime.Now.Year - customer.dateOfBirth.Year;
-            customer.premiumStatus = false;
-            customer.adminAccount = false;
-            _context.Customers.Add(customer);
-            _context.SaveChanges();
+            customer = customerServices.RegisterViewModelToCustomerTransfer(registerCustomer);
+            customerServices.CustomerAddToDataBase(customer);
             return RedirectToAction("Register");
         }
     }

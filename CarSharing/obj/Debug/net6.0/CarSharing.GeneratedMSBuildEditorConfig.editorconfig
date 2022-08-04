@@ -8,77 +8,77 @@ build_property.PlatformNeutralAssembly =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = CarSharing
 build_property.RootNamespace = CarSharing
-build_property.ProjectDir = C:\Users\Szymon\Desktop\CarSharing\CarSharing\CarSharing\
+build_property.ProjectDir = C:\Users\Szymon\Desktop\carsharingmvc\CarSharing\CarSharing\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\Szymon\Desktop\CarSharing\CarSharing\CarSharing
+build_property.MSBuildProjectDirectory = C:\Users\Szymon\Desktop\carsharingmvc\CarSharing\CarSharing
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/Szymon/Desktop/CarSharing/CarSharing/CarSharing/Views/CarManager/Index.cshtml]
+[C:/Users/Szymon/Desktop/carsharingmvc/CarSharing/CarSharing/Views/CarManager/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyTWFuYWdlclxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Szymon/Desktop/CarSharing/CarSharing/CarSharing/Views/CarManager/IndexAddCar.cshtml]
+[C:/Users/Szymon/Desktop/carsharingmvc/CarSharing/CarSharing/Views/CarManager/IndexAddCar.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyTWFuYWdlclxJbmRleEFkZENhci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Szymon/Desktop/CarSharing/CarSharing/CarSharing/Views/Home/Index.cshtml]
+[C:/Users/Szymon/Desktop/carsharingmvc/CarSharing/CarSharing/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Szymon/Desktop/CarSharing/CarSharing/CarSharing/Views/Home/Privacy.cshtml]
+[C:/Users/Szymon/Desktop/carsharingmvc/CarSharing/CarSharing/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Szymon/Desktop/CarSharing/CarSharing/CarSharing/Views/ListOfCars/Logged.cshtml]
+[C:/Users/Szymon/Desktop/carsharingmvc/CarSharing/CarSharing/Views/ListOfCars/Logged.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGlzdE9mQ2Fyc1xMb2dnZWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Szymon/Desktop/CarSharing/CarSharing/CarSharing/Views/ListOfCars/NotLogged.cshtml]
+[C:/Users/Szymon/Desktop/carsharingmvc/CarSharing/CarSharing/Views/ListOfCars/NotLogged.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGlzdE9mQ2Fyc1xOb3RMb2dnZWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Szymon/Desktop/CarSharing/CarSharing/CarSharing/Views/Login/Logged.cshtml]
+[C:/Users/Szymon/Desktop/carsharingmvc/CarSharing/CarSharing/Views/Login/Logged.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cTG9nZ2VkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Szymon/Desktop/CarSharing/CarSharing/CarSharing/Views/Login/Login.cshtml]
+[C:/Users/Szymon/Desktop/carsharingmvc/CarSharing/CarSharing/Views/Login/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cTG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Szymon/Desktop/CarSharing/CarSharing/CarSharing/Views/Register/Register.cshtml]
+[C:/Users/Szymon/Desktop/carsharingmvc/CarSharing/CarSharing/Views/Register/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVnaXN0ZXJcUmVnaXN0ZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Szymon/Desktop/CarSharing/CarSharing/CarSharing/Views/Reserve/ReservationComplete.cshtml]
+[C:/Users/Szymon/Desktop/carsharingmvc/CarSharing/CarSharing/Views/Reserve/ReservationComplete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2ZVxSZXNlcnZhdGlvbkNvbXBsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Szymon/Desktop/CarSharing/CarSharing/CarSharing/Views/Reserve/ReservationForm.cshtml]
+[C:/Users/Szymon/Desktop/carsharingmvc/CarSharing/CarSharing/Views/Reserve/ReservationForm.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2ZVxSZXNlcnZhdGlvbkZvcm0uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Szymon/Desktop/CarSharing/CarSharing/CarSharing/Views/Reserve/Reserve.cshtml]
+[C:/Users/Szymon/Desktop/carsharingmvc/CarSharing/CarSharing/Views/Reserve/Reserve.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2ZVxSZXNlcnZlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Szymon/Desktop/CarSharing/CarSharing/CarSharing/Views/Shared/Error.cshtml]
+[C:/Users/Szymon/Desktop/carsharingmvc/CarSharing/CarSharing/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Szymon/Desktop/CarSharing/CarSharing/CarSharing/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/Szymon/Desktop/carsharingmvc/CarSharing/CarSharing/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Szymon/Desktop/CarSharing/CarSharing/CarSharing/Views/_ViewImports.cshtml]
+[C:/Users/Szymon/Desktop/carsharingmvc/CarSharing/CarSharing/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Szymon/Desktop/CarSharing/CarSharing/CarSharing/Views/_ViewStart.cshtml]
+[C:/Users/Szymon/Desktop/carsharingmvc/CarSharing/CarSharing/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Szymon/Desktop/CarSharing/CarSharing/CarSharing/Views/Shared/_Layout.cshtml]
+[C:/Users/Szymon/Desktop/carsharingmvc/CarSharing/CarSharing/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-i6p50g3dfa

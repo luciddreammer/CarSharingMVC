@@ -1,5 +1,6 @@
 using CarSharing.Models;
 using Microsoft.EntityFrameworkCore;
+using CarSharing.ModelServices;
 
 
 
@@ -9,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 var connectionString = builder.Configuration.GetConnectionString("CarSharing");
 builder.Services.AddDbContext<CarSharingContext>(x => x.UseSqlServer(connectionString));
+
+builder.Services.AddScoped<CustomerServices>(); //Do dependency injection
 
 var app = builder.Build();
 
