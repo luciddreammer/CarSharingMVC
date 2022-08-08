@@ -12,6 +12,7 @@ var connectionString = builder.Configuration.GetConnectionString("CarSharing");
 builder.Services.AddDbContext<CarSharingContext>(x => x.UseSqlServer(connectionString));
 
 builder.Services.AddScoped<CustomerServices>(); //Do dependency injection
+builder.Services.AddScoped<CarListService>();
 
 var app = builder.Build();
 

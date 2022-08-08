@@ -2,37 +2,31 @@
 using CarSharing.Models;
 using Microsoft.EntityFrameworkCore;
 using CarSharing.Models.DataBaseModels;
+using CarSharing.Models.ViewModels;
+using CarSharing.ModelServices;
+
 
 namespace CarSharing.Controllers
 {
     public class ListOfCarsController : Controller
     {
-
-        private CarSharingContext _context;
-
+        CarListService carListService;
         public ListOfCars CarList = new ListOfCars();
 
-        public ListOfCarsController(CarSharingContext context)
+
+        public ListOfCarsController(CarListService carListService)
         {
-            _context = context;
+            this.carListService = carListService;
         }
+
         public IActionResult ListOfCars()
         {
-            List<Reservation> listOfReservations = new List<Reservation>();
-            CarList.listOfCars = _context.Cars.ToList();
-            Car car = new Car();
-            car.relations.AddRange(_context.Relations
-                .Include(c => c.car)
-                .Include(r => r.reservation)
-                .Include(cu => cu.customer));
-            
-
-            var sessionId = HttpContext.Request.Cookies["Session_Id"];
-            if (sessionId != null)
+            carListService.carListViewModel = carListService.GetListOfCars();
+            if (HttpContext.Request.Cookies["Session_Id"] != null)
             {
-                return View("Logged", CarList);
+                return View("Logged", carListService);
             }
-            return View("NotLogged", CarList);
+            return View("NotLogged", carListService);
         }
 
     }

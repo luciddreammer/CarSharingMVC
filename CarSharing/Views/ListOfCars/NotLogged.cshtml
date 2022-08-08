@@ -1,5 +1,4 @@
-﻿@model CarSharing.Models.ListOfCars;
-@using CarSharing.Models;
+﻿@model CarSharing.ModelServices.CarListService;
 @{
     ViewData["Title"] = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -28,19 +27,15 @@
             <p>Additional Equipment</p>
         </th>
         <th>
-            <p>Is rented</p>
-        </th>
-        <th>
             <p>Rented From</p>
         </th>
-        <th>
+         <th>
             <p>Rented To</p>
         </th>
     </tr>
-
-    @if(Model.listOfCars!=null)
+    @if(Model.carListViewModel.Any())
     {
-        foreach(var element in Model.listOfCars)
+        foreach(var element in Model.carListViewModel)
         {
             <tr>
                 <td>@element.brand</td>
@@ -48,22 +43,35 @@
                 <td>@element.engine</td>
                 <td>@element.color</td>
                 <td>@element.additionalEquipment</td>
-                @*Zakomentowane na czas ogarniecia bazy danych!*@
-                @*<td>@element.rentedStatus</td>
-                @if(element.rentedStatus==true)
+                <td>
+                <table>
+                @foreach(var rel in element.reservations)
                 {
-                    <td>@element.rentedFrom</td>
-                    <td>@element.rentedTo</td>
+                        <tr>
+                            <td>@rel.rentedFrom</td>
+                        </tr>
                 }
-                else
+                </table>
+                </td>
+                <td>
+                <table>
+               @foreach(var rel in element.reservations)
                 {
-                    <td></td>
-                    <td></td>
-                }*@
+                        <tr>
+                            <td>@rel.rentedTo</td>
+                        </tr>
+                }
+                </table>
+                </td>
             </tr>
         }
     }
 </table>
+
+
+ 
+
+
 
 <div id="container">
     <div id="div1">
