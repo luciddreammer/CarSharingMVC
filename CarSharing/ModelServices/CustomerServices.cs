@@ -1,7 +1,7 @@
 ﻿using CarSharing.Models.DataBaseModels;
 using CarSharing.Models.ViewModels;
 using CarSharing.Models;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace CarSharing.ModelServices
 {

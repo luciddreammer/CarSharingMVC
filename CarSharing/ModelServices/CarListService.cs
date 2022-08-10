@@ -32,7 +32,7 @@ namespace CarSharing.ModelServices
                 {
                     singleCarViewModel.reservations.Add(new ReservationViewModel
                     {
-                        id = rel.reservation.id,
+                        reservationId = rel.reservation.id,
                         rentedFrom = rel.reservation.rentedFrom,
                         rentedTo = rel.reservation.rentedTo
                     });

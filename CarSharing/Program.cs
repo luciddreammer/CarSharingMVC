@@ -13,6 +13,7 @@ builder.Services.AddDbContext<CarSharingContext>(x => x.UseSqlServer(connectionS
 
 builder.Services.AddScoped<CustomerServices>(); //Do dependency injection
 builder.Services.AddScoped<CarListService>();
+builder.Services.AddScoped<ReservationServices>();
 
 var app = builder.Build();
 

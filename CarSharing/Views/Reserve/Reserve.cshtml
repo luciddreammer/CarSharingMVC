@@ -1,5 +1,5 @@
-﻿@model Car;
-@using CarSharing.Models.DataBaseModels;
+﻿@model ReservationViewModel;
+@using CarSharing.Models.ViewModels;
 <div>
     <h1> Your selected car:</h1>
 </div>
@@ -21,17 +21,42 @@
         <th>
             <p>Additional Equipment</p>
         </th>
+        <th>
+            <p>Rented From</p>
+        </th>
+         <th>
+            <p>Rented To</p>
+        </th>
     </tr>
-    @*Zakomentowane na czas ogarniecia bazy danych!*@
      <tr>
         <td>@Model.brand</td>
         <td>@Model.model</td>
         <td>@Model.engine</td>
         <td>@Model.color</td>
         <td>@Model.additionalEquipment</td>
+        <td>
+        <table>
+                @foreach(var rel in @Model.reservations)
+                {
+                        <tr>
+                            <td>@rel.rentedFrom</td>
+                        </tr>
+                }
+                </table>
+                </td>
+                <td>
+                <table>
+               @foreach(var rel in @Model.reservations)
+                {
+                        <tr>
+                            <td>@rel.rentedTo</td>
+                        </tr>
+                }
+                </table>        
+        </td>
      </tr>       
 </table>
-@Html.Partial("ReservationForm", new CarSharing.Models.DataBaseModels.Relation(@Model.id))
+@Html.Partial("ReservationForm", @Model)
 <div id="container">
     <div id="div1">
         <br />
