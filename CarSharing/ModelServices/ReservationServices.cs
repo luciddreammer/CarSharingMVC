@@ -3,7 +3,6 @@ using CarSharing.Models;
 using CarSharing.Models.Errors;
 using CarSharing.Models.DataBaseModels;
 using Microsoft.AspNetCore.Mvc;
-using CarSharing.Models.Helper;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -13,17 +12,17 @@ namespace CarSharing.ModelServices
     {
         ReservationViewModel reservationViewModel = new();
         CarSharingContext _context;
-        Car car = new();
-        CookieHelper cookieHelper = new();
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public ReservationServices(CarSharingContext context)
+        public ReservationServices(CarSharingContext context, IHttpContextAccessor http)
         {
             _context = context;
+            this._httpContextAccessor = http;
         }
 
         public Car FindCar(int carId)
         {
-            car = _context.Cars.FirstOrDefault(x => x.id == carId);
+            Car car = _context.Cars.FirstOrDefault(x => x.id == carId);
             return car;
         }
 
@@ -75,13 +74,11 @@ namespace CarSharing.ModelServices
                 ReserveErrors.PastError = true;
                 return false;
             }
-
             if ((reservation.rentedFrom - reservation.rentedTo).Days > 21 || (reservation.rentedTo - reservation.rentedFrom).Days < 1)
             {
                 ReserveErrors.MaxLengthError = true;
                 return false;
             }//year must be the same
-
             foreach (var res in _context.Reservations.ToList())
             {
                 bool conditionOne = (reservation.rentedFrom - res.rentedFrom).Days < 0 || (reservation.rentedFrom - res.rentedTo).Days > 0;
@@ -94,11 +91,10 @@ namespace CarSharing.ModelServices
             }
             return true;
         }
-
-        public void DataBaseSetUp(ReservationViewModel reservationViewModel, string cookie_Id)
+        public void DataBaseSetUp(ReservationViewModel reservationViewModel)
         {
             var selectedCar = FindCar(reservationViewModel.carId);
-            var cookieString = cookie_Id.ToString();
+            var cookieString = _httpContextAccessor.HttpContext.Request.Cookies["Session_Id"];
             Customer currentUser = _context.Customers.FirstOrDefault(x => x.cookieId == double.Parse(cookieString));
             var newReservation = new Reservation { rentedFrom = reservationViewModel.rentedFrom, rentedTo = reservationViewModel.rentedTo};
             _context.Reservations.Add(newReservation);

@@ -10,11 +10,10 @@ namespace CarSharing.Controllers
 {
     public class ListOfCarsController : Controller
     {
-        CarListService carListService;
+        CarListServices carListService;
         public ListOfCars CarList = new ListOfCars();
 
-
-        public ListOfCarsController(CarListService carListService)
+        public ListOfCarsController(CarListServices carListService)
         {
             this.carListService = carListService;
         }
@@ -22,7 +21,7 @@ namespace CarSharing.Controllers
         public IActionResult ListOfCars()
         {
             carListService.carListViewModel = carListService.GetListOfCars();
-            if (HttpContext.Request.Cookies["Session_Id"] != null)
+            if (carListService.CheckCookie())
             {
                 return View("Logged", carListService);
             }

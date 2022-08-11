@@ -1,23 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CarSharing.Models.ViewModels;
-using System.Diagnostics;
 using CarSharing.ModelServices;
-using CarSharing.Models.Errors;
 using CarSharing.Models.DataBaseModels;
-using CarSharing.Models;
-using CarSharing.Models.Helper;
 
 
 namespace CarSharing.Controllers
 {
     public class RegisterController : Controller
     {
-        RegisterValidationHelper validationHelper;
-        CustomerServices customerServices;
+        RegisterServices registerServices;
 
-        public RegisterController(CustomerServices customerService) //Dependency injection
+        public RegisterController(RegisterServices customerService) //Dependency injection
         {
-            this.customerServices = customerService;
+            this.registerServices = customerService;
         }
 
         public IActionResult Register(RegisterViewModel registerCustomer)
@@ -28,13 +23,12 @@ namespace CarSharing.Controllers
         [HttpPost]
         public ActionResult RegisterNewUser(RegisterViewModel registerCustomer)
         {
-            Customer customer = new Customer();
-            if (!validationHelper.RegisterVerification(registerCustomer))
+            if (!registerServices.RegisterVerification(registerCustomer))
             {
                 return RedirectToAction("Register", registerCustomer);
             }
-            customer = customerServices.RegisterViewModelToCustomerTransfer(registerCustomer);
-            customerServices.CustomerAddToDataBase(customer);
+            Customer customer = registerServices.RegisterViewModelToCustomerTransfer(registerCustomer);
+            registerServices.CustomerAddToDataBase(customer);
             return RedirectToAction("Register");
         }
     }

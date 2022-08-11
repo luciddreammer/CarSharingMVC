@@ -6,15 +6,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CarSharing.ModelServices
 {
-    public class CarListService
+    public class CarListServices
     {
         public List<CarViewModel> carListViewModel = new List<CarViewModel>();
         public ListOfCars CarList = new ListOfCars();
         private CarSharingContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CarListService(CarSharingContext context)
+        public CarListServices(CarSharingContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
+        }
+
+        public bool CheckCookie()
+        {
+           return _httpContextAccessor.HttpContext.Request.Cookies["Session_Id"]!=null;
         }
 
         public List<CarViewModel> GetListOfCars()

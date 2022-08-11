@@ -11,9 +11,11 @@ builder.Services.AddControllersWithViews();
 var connectionString = builder.Configuration.GetConnectionString("CarSharing");
 builder.Services.AddDbContext<CarSharingContext>(x => x.UseSqlServer(connectionString));
 
-builder.Services.AddScoped<CustomerServices>(); //Do dependency injection
-builder.Services.AddScoped<CarListService>();
+builder.Services.AddScoped<RegisterServices>(); //Do dependency injection
+builder.Services.AddScoped<CarListServices>();
 builder.Services.AddScoped<ReservationServices>();
+builder.Services.AddScoped<LoginServices>();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 

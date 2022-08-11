@@ -9,8 +9,6 @@ namespace CarSharing.Controllers
     public class ReserveController : Controller
     {
         ReservationServices reservationService;
-        ReservationViewModel reservationViewModel;
-        Car car = new();
 
         public ReserveController(ReservationServices reservationservice)
         {
@@ -19,7 +17,7 @@ namespace CarSharing.Controllers
 
         public IActionResult Reserve(ReservationViewModel reservationViewModel)
         {
-            car = reservationService.FindCar(reservationViewModel.carId);
+            Car car = reservationService.FindCar(reservationViewModel.carId);
             reservationViewModel = reservationService.CarToViewModelTransfer(car);
             return View(reservationViewModel);
         }
@@ -36,8 +34,7 @@ namespace CarSharing.Controllers
             {
                    return RedirectToAction("Reserve", reservationViewModel);
             }
-            var cookie_Id = Request.Cookies["Session_Id"];
-            reservationService.DataBaseSetUp(reservationViewModel, cookie_Id);
+            reservationService.DataBaseSetUp(reservationViewModel);
             return RedirectToAction("ReservationComplete");
         }
     }
