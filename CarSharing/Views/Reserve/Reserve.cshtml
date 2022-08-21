@@ -1,4 +1,4 @@
-﻿@model ReservationViewModel;
+﻿@model CarViewModel;
 @using CarSharing.Models.ViewModels;
 <div>
     <h1> Your selected car:</h1>
@@ -56,7 +56,7 @@
         </td>
      </tr>       
 </table>
-@Html.Partial("ReservationForm", @Model)
+@Html.Partial("ReservationForm", new ReservationViewModel(){ carId = Model.id})
 <div id="container">
     <div id="div1">
         <br />

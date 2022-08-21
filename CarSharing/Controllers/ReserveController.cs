@@ -15,11 +15,11 @@ namespace CarSharing.Controllers
             this.reservationService = reservationservice;
         }
 
-        public IActionResult Reserve(ReservationViewModel reservationViewModel)
+        public IActionResult Reserve(CarViewModel carViewModel)
         {
-            Car car = reservationService.FindCar(reservationViewModel.carId);
-            reservationViewModel = reservationService.CarToViewModelTransfer(car);
-            return View(reservationViewModel);
+            Car car = reservationService.FindCar(carViewModel.id);
+            carViewModel = reservationService.CarToViewModelTransfer(car);
+            return View(carViewModel);
         }
 
         public IActionResult ReservationComplete()
@@ -32,7 +32,9 @@ namespace CarSharing.Controllers
         {
             if (!reservationService.VerifyDates(reservationViewModel))
             {
-                   return RedirectToAction("Reserve", reservationViewModel);
+                CarViewModel carViewModel = new();
+                carViewModel.id = reservationViewModel.carId;
+                 return RedirectToAction("Reserve", carViewModel);
             }
             reservationService.DataBaseSetUp(reservationViewModel);
             return RedirectToAction("ReservationComplete");

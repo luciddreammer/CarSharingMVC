@@ -11,6 +11,7 @@ namespace CarSharing.ModelServices
     public class ReservationServices
     {
         ReservationViewModel reservationViewModel = new();
+        CarViewModel carViewModel = new();
         CarSharingContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -26,30 +27,27 @@ namespace CarSharing.ModelServices
             return car;
         }
 
-        public ReservationViewModel CarToViewModelTransfer(Car car)
+        public CarViewModel CarToViewModelTransfer(Car car)
         {
-            reservationViewModel.carId = car.id;
-            reservationViewModel.brand = car.brand;
-            reservationViewModel.color = car.color;
-            reservationViewModel.model = car.model;
-            reservationViewModel.additionalEquipment = car.additionalEquipment;
-            reservationViewModel.engine = car.engine;
-            car = new Car();
-            car.relations.AddRange(_context.Relations
-                .Include(c => c.car)
-                .Include(r => r.reservation)
-                .Include(cu => cu.customer));
-
-            foreach (var rel in car.relations)
+            //Tu inny sposob
+            //List<Car> selectedCar = _context.Cars.Include(x => x.relations).Where(x => x.id==car.id).ToList();
+            Car selectedCar = _context.Cars.Include(x => x.relations).ThenInclude(x=>x.reservation).FirstOrDefault(x => x.id == car.id);
+            foreach (var rel in selectedCar.relations)
             {
-                reservationViewModel.reservations.Add(new ReservationViewModel
+                carViewModel.reservations.Add(new ReservationViewModel
                 {
                     reservationId = rel.reservation.id,
                     rentedFrom = rel.reservation.rentedFrom,
                     rentedTo = rel.reservation.rentedTo
                 });
             }
-            return reservationViewModel;
+            carViewModel.id = car.id;
+            carViewModel.brand = car.brand;
+            carViewModel.color = car.color;
+            carViewModel.model = car.model;
+            carViewModel.additionalEquipment = car.additionalEquipment;
+            carViewModel.engine = car.engine;
+            return carViewModel;
         }
 
         public bool VerifyDates(ReservationViewModel reservation)
@@ -79,10 +77,11 @@ namespace CarSharing.ModelServices
                 ReserveErrors.MaxLengthError = true;
                 return false;
             }//year must be the same
-            foreach (var res in _context.Reservations.ToList())
+            Car selectedCar = _context.Cars.Include(x => x.relations).ThenInclude(x => x.reservation).FirstOrDefault(x => x.id == reservation.carId);
+            foreach (var res in selectedCar.relations)
             {
-                bool conditionOne = (reservation.rentedFrom - res.rentedFrom).Days < 0 || (reservation.rentedFrom - res.rentedTo).Days > 0;
-                bool conditionTwo = (reservation.rentedTo - res.rentedFrom).Days < 0 || (reservation.rentedTo - res.rentedTo).Days > 0;
+                bool conditionOne = (reservation.rentedFrom - res.reservation.rentedFrom).Days < 0 || (reservation.rentedFrom - res.reservation.rentedTo).Days > 0;
+                bool conditionTwo = (reservation.rentedTo - res.reservation.rentedFrom).Days < 0 || (reservation.rentedTo - res.reservation.rentedTo).Days > 0;
                 if (!(conditionOne && conditionTwo))
                 {
                     ReserveErrors.AnotherReservationError = true;

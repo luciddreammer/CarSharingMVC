@@ -56,18 +56,9 @@
                 }
                 </table>
                 </td>
+                
                 <td>
-                <table>
-               @foreach(var rel in element.reservations)
-                {
-                        <tr>
-                            <td>@rel.rentedTo</td>
-                        </tr>
-                }
-                </table>
-                </td>
-                <td>
-                    <a class="btn btn-primary" href="@Url.Action("Reserve", "Reserve", new {carId = @element.id})" >Reserve</a>
+                    <a class="btn btn-primary" href="@Url.Action("Reserve", "Reserve", new {id = @element.id})" >Reserve</a>
                 </td>
                     
             </tr>

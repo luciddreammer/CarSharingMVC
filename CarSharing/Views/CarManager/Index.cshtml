@@ -1,84 +1,102 @@
-﻿@model CarSharing.Models.ListOfCars;
+﻿@model ListOfCarsViewModel
 @using CarSharing.Models;
+@using CarSharing.Models.ViewModels;
+
+<link href="~/css/StyleSheet.css" rel="stylesheet" type="text/css" />
 
 @if(ViewBag.Allow==true)
 {
-  <div>
-    <h1> List of cars:</h1>
-</div>
-
-<table class="table">
-    <tr>
-        <th>
-            <p>Brand</p>
-        </th>
-        <th>
-            <p>Model</p>
-        </th>
-        <th>
-            <p>Engine</p>
-        </th>
-        <th>
-            <p>Color</p>
-        </th>
-        <th>
-            <p>Additional Equipment</p>
-        </th>
-        <th>
-            <p>Is rented</p>
-        </th>
-        <th>
-            <p>Rented From</p>
-        </th>
-        <th>
-            <p>Rented To</p>
-        </th>
-        <th>
-            <p>Delete Reservation</p>
-        </th>
-        <th>
-            <p>Remove Car</p>
-        </th>
-
-    </tr>
-
-    @if(Model.listOfCars!=null)
-    {
-        foreach(var element in Model.listOfCars)
-        {
-            <tr>
-                <td>@element.brand</td>
-                <td>@element.model</td>
-                <td>@element.engine</td>
-                <td>@element.color</td>
-                <td>@element.additionalEquipment</td>
-                @*<td>@element.rentedStatus</td>*@ @*Zakomentowane na czas ogarniecia bazy danych!*@
-                @*@if(element.rentedStatus==true)
-                {
-                    <td>@element.rentedFrom</td>
-                    <td>@element.rentedTo</td>
-                    <td><a class="btn btn-primary" href="@Url.Action("DeleteReservation", "CarManager", new {carId = @element.id})" >Delete Reservation</a></td>
-                }else
-                {
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                }
-                <td><a class="btn btn-primary" href="@Url.Action("RemoveCar", "CarManager", new {carId = @element.id})" >Remove Car</a></td>*@
-            </tr>
-        }
-    }
-</table>
-
-<div id="container">
-    <div id="div1">
-        <b id="text">Add new car</b>
-        <br />
-            <a class="btn btn-primary" asp-action="IndexAddCar" asp-controller="CarManager" id="button1">Add car</a>
+    <div>
+        <h1> List of cars:</h1>
     </div>
-</div>
-}
-@if(ViewBag.Allow==false)
+
+    <table class="table">
+        <tr>
+            <th>
+                <p>Brand</p>
+            </th>
+            <th>
+                <p>Model</p>
+            </th>
+            <th>
+                <p>Engine</p>
+            </th>
+            <th>
+                <p>Color</p>
+            </th>
+            <th>
+                <p>Additional Equipment</p>
+            </th>
+            <th>
+                <p>Rented From</p>
+            </th>
+            <th>
+                <p>Rented To</p>
+            </th>
+            <th>
+                <p>Delete Reservation</p>
+            </th>
+            <th>
+                <p>Remove Car</p>
+            </th>
+
+        </tr>
+
+        @if (Model.listOfCars != null)
+        {
+            foreach (var element in Model.listOfCars)
+            {
+                <tr>
+                    <td>@element.brand</td>
+                    <td>@element.model</td>
+                    <td>@element.engine</td>
+                    <td>@element.color</td>
+                    <td>@element.additionalEquipment</td>
+                    <td>
+                        <table>
+                            @foreach (var rel in element.reservations)
+                            {
+                                <tr>
+                                    <td>@rel.rentedFrom</td>
+                                </tr>
+                            }
+                        </table>
+                    </td>
+                    <td>
+                        <table>
+                            @foreach (var rel in element.reservations)
+                            {
+                                <tr>
+                                    <td>@rel.rentedTo</td>
+                                </tr>
+                            }
+                        </table>
+                    </td>
+                    <td>
+                        <table>
+                            @foreach (var rel in element.reservations)
+                            {
+                                <tr>
+                                    <td><a class="btn btn-primary" href="@Url.Action("DeleteReservation", "CarManager", new {carId = rel.reservationId})">Delete Reservation</a></td>
+                                </tr>
+                            }
+                        </table>
+                    </td>
+                    <td><a class="btn btn-primary" href="@Url.Action("RemoveCar", "CarManager", new {carId = element.id})">Remove Car</a></td>
+                </tr>
+            }
+        }
+    </table>
+
+    <div id="container">
+        <div id="div1">
+            <b id="text">Add new car</b>
+            <br />
+            <a class="btn btn-primary" asp-action="IndexAddCar" asp-controller="CarManager" id="button1">Add car</a>
+        </div>
+    </div>
+}else
 {
     <h1>You don't have access to this page.</h1>
 }
+

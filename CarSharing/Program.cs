@@ -15,6 +15,7 @@ builder.Services.AddScoped<RegisterServices>(); //Do dependency injection
 builder.Services.AddScoped<CarListServices>();
 builder.Services.AddScoped<ReservationServices>();
 builder.Services.AddScoped<LoginServices>();
+builder.Services.AddScoped<CarManagerServices>();
 builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();

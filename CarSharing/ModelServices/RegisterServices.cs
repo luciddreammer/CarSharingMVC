@@ -85,7 +85,6 @@ namespace CarSharing.ModelServices
 
         public void CustomerAddToDataBase(Customer customer)
         {
-
             _context.Customers.Add(customer);
             _context.SaveChanges();
         }
