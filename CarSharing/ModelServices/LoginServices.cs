@@ -1,21 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using CarSharing.Models.DataBaseModels;
+﻿using CarSharing.Models.DataBaseModels;
 using CarSharing.Models.Errors;
 using CarSharing.Models;
-using CarSharing.Models.ViewModels;
+using CarSharing.Factories;
+using CarSharing.Repositories;
 
 
 namespace CarSharing.ModelServices
 {
     public class LoginServices
     {
-        private CarSharingContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private ICustomerRepository _customerRepository;
 
         public LoginServices(IHttpContextAccessor httpContextAccessor, CarSharingContext context)
         {
             _httpContextAccessor = httpContextAccessor;
-            _context = context;
+            CustomerRepoFactory _customerRepoFactory = CustomerRepoFactory.Instance();
+            _customerRepository = _customerRepoFactory.Build(context);
         }
 
         public bool CheckCookie()
@@ -27,7 +28,7 @@ namespace CarSharing.ModelServices
         {
             LoginFlags.loginError = false;
             LoginFlags.passwordError = false;
-            var user = _context.Customers.FirstOrDefault(x => x.login == customer.login);
+            var user = _customerRepository.FindCustomerWithLogin(customer.login);
             if(user == null)
             {
                 LoginFlags.loginError = true;
@@ -52,10 +53,9 @@ namespace CarSharing.ModelServices
             do
             {
                 randomNumber = rnd.Next(10, 100000000);
-            } while (_context.Customers.FirstOrDefault(x => x.cookieId == randomNumber) != null);
+            } while (_customerRepository.GetCustomer(randomNumber.ToString()) != null);
             user.cookieId = randomNumber;
-            _context.Customers.Update(user);
-            _context.SaveChanges();
+            _customerRepository.CreateCookie(user);
             _httpContextAccessor.HttpContext.Response.Cookies.Append("Session_Id", randomNumber.ToString(), cookieOptions);
         }
 
@@ -65,10 +65,9 @@ namespace CarSharing.ModelServices
             var cookieString = cookie_Id.ToString();
             try
             {
-                var currentUser = _context.Customers.FirstOrDefault(x => x.cookieId == double.Parse(cookieString));
+                var currentUser = _customerRepository.GetCustomer(cookieString);
                 currentUser.cookieId = 0;
-                _context.Customers.Update(currentUser);
-                _context.SaveChanges();
+                _customerRepository.CreateCookie(currentUser);
             }
             catch
             {

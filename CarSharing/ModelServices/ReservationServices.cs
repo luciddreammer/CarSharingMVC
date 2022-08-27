@@ -4,34 +4,41 @@ using CarSharing.Models.Errors;
 using CarSharing.Models.DataBaseModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
+using CarSharing.Factories;
+using CarSharing.Repositories;
+using CarSharing.Models.Repositories;
 
 namespace CarSharing.ModelServices
 {
     public class ReservationServices
     {
-        ReservationViewModel reservationViewModel = new();
         CarViewModel carViewModel = new();
-        CarSharingContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private IReservationRepository _reservationRepository;
+        private ICarRepository _carRepository;
+        private ICustomerRepository _customerRepository;
 
         public ReservationServices(CarSharingContext context, IHttpContextAccessor http)
         {
-            _context = context;
-            this._httpContextAccessor = http;
+            ReservationRepoFactory _reservationRepoFactory = ReservationRepoFactory.Instance();
+            CarRepoFactory _carRepoFactory = CarRepoFactory.Instance();
+            CustomerRepoFactory _customerRepoFactory = CustomerRepoFactory.Instance();
+            _customerRepository = _customerRepoFactory.Build(context);
+            _reservationRepository = _reservationRepoFactory.Build(context);
+            _carRepository = _carRepoFactory.Build(context);
+            _httpContextAccessor = http;
         }
 
         public Car FindCar(int carId)
         {
-            Car car = _context.Cars.FirstOrDefault(x => x.id == carId);
-            return car;
+            return _carRepository.FindCar(carId);
         }
 
         public CarViewModel CarToViewModelTransfer(Car car)
         {
             //Tu inny sposob
             //List<Car> selectedCar = _context.Cars.Include(x => x.relations).Where(x => x.id==car.id).ToList();
-            Car selectedCar = _context.Cars.Include(x => x.relations).ThenInclude(x=>x.reservation).FirstOrDefault(x => x.id == car.id);
+            Car selectedCar = _carRepository.FindCarWithRelations(car.id);
             foreach (var rel in selectedCar.relations)
             {
                 carViewModel.reservations.Add(new ReservationViewModel
@@ -77,7 +84,7 @@ namespace CarSharing.ModelServices
                 ReserveErrors.MaxLengthError = true;
                 return false;
             }//year must be the same
-            Car selectedCar = _context.Cars.Include(x => x.relations).ThenInclude(x => x.reservation).FirstOrDefault(x => x.id == reservation.carId);
+            Car selectedCar = _carRepository.FindCarWithRelations(reservation.carId);
             foreach (var res in selectedCar.relations)
             {
                 bool conditionOne = (reservation.rentedFrom - res.reservation.rentedFrom).Days < 0 || (reservation.rentedFrom - res.reservation.rentedTo).Days > 0;
@@ -94,13 +101,11 @@ namespace CarSharing.ModelServices
         {
             var selectedCar = FindCar(reservationViewModel.carId);
             var cookieString = _httpContextAccessor.HttpContext.Request.Cookies["Session_Id"];
-            Customer currentUser = _context.Customers.FirstOrDefault(x => x.cookieId == double.Parse(cookieString));
+            Customer currentUser = _customerRepository.GetCustomer(cookieString);
             var newReservation = new Reservation { rentedFrom = reservationViewModel.rentedFrom, rentedTo = reservationViewModel.rentedTo};
-            _context.Reservations.Add(newReservation);
-            _context.SaveChanges();
+            _reservationRepository.AddReservation(newReservation);
             var newRelation = new Relation { carId = reservationViewModel.carId, customerId = currentUser.id, reservationId = newReservation.id };
-            _context.Relations.Add(newRelation);
-            _context.SaveChanges();
+            _reservationRepository.AddRelation(newRelation);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿@model CarSharing.ModelServices.CarListServices;
+﻿@using CarSharing.Models.ViewModels
+@model List<CarViewModel>
 @{
     ViewData["Title"] = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -36,9 +37,9 @@
             <p>Reserve</p>
         </th>
     </tr>
-    @if(Model.carListViewModel.Any())
+    @if(Model.Any())
     {
-        foreach(var element in Model.carListViewModel)
+        foreach(var element in Model)
         {
             <tr>
                 <td>@element.brand</td>
@@ -55,6 +56,16 @@
                         </tr>
                 }
                 </table>
+                </td>
+                <td>
+                    <table>
+                        @foreach (var rel in element.reservations)
+                        {
+                            <tr>
+                                <td>@rel.rentedTo</td>
+                            </tr>
+                        }
+                    </table>
                 </td>
                 
                 <td>

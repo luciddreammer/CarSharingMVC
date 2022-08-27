@@ -2,36 +2,33 @@
 using CarSharing.Models.ViewModels;
 using CarSharing.Models;
 using Microsoft.EntityFrameworkCore;
-
+using CarSharing.Models.Repositories;
+using CarSharing.Factories;
 
 namespace CarSharing.ModelServices
 {
     public class CarListServices
     {
-        public List<CarViewModel> carListViewModel = new List<CarViewModel>();
-        public ListOfCars CarList = new ListOfCars();
-        private CarSharingContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private ICarRepository _carRepository;
 
         public CarListServices(CarSharingContext context, IHttpContextAccessor httpContextAccessor)
         {
-            _context = context;
+            CarRepoFactory _carRepoFactory = CarRepoFactory.Instance();
             _httpContextAccessor = httpContextAccessor;
+            _carRepository = _carRepoFactory.Build(context);
         }
 
         public bool CheckCookie()
         {
-           return _httpContextAccessor.HttpContext.Request.Cookies["Session_Id"]!=null;
+            return _httpContextAccessor.HttpContext.Request.Cookies["Session_Id"] != null;
         }
 
         public List<CarViewModel> GetListOfCars()
         {
-            CarList.listOfCars = _context.Cars.ToList();
-            Car car = new Car();
-            car.relations.AddRange(_context.Relations
-                .Include(c => c.car)
-                .Include(r => r.reservation)
-                .Include(cu => cu.customer));
+            List<CarViewModel> carListViewModel = new List<CarViewModel>();
+            ListOfCars CarList = new ListOfCars();
+            CarList = _carRepository.GetCars();
             foreach (var singleCar in CarList.listOfCars)
             {
                 CarViewModel singleCarViewModel = new();

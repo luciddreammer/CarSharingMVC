@@ -1,20 +1,22 @@
 ﻿using CarSharing.Models.DataBaseModels;
 using CarSharing.Models.ViewModels;
 using CarSharing.Models;
-using Microsoft.EntityFrameworkCore;
 using CarSharing.Models.Errors;
 using System.Text.RegularExpressions;
+using CarSharing.Repositories;
+using CarSharing.Factories;
 
 
 namespace CarSharing.ModelServices
 {
     public class RegisterServices
     {
-        private CarSharingContext _context;
+        private ICustomerRepository _customerRepository;
 
         public RegisterServices(CarSharingContext context)
         {
-            _context = context;
+            CustomerRepoFactory customerRepoFactory = CustomerRepoFactory.Instance();
+            _customerRepository = customerRepoFactory.Build(context);
         }
         public bool RegisterVerification(RegisterViewModel registerCustomer)
         {
@@ -32,8 +34,7 @@ namespace CarSharing.ModelServices
                 RegisterErrors.loginError = true;
                 return false;
             }
-            var existingLogin = FindCustomerViaLogin(registerCustomer.login);
-            if (existingLogin != null)
+            if (_customerRepository.FindCustomerWithLogin(registerCustomer.login) != null)
             {
                 RegisterErrors.loginExists = true;
                 return false;
@@ -48,8 +49,7 @@ namespace CarSharing.ModelServices
                 RegisterErrors.emailError = true;
                 return false;
             }
-            var existingEmail = FindCustomerViaEmail(registerCustomer.email);
-            if (existingEmail != null)
+            if (_customerRepository.FindCustomerViaEmail(registerCustomer.email) != null)
             {
                 RegisterErrors.emailExists = true;
                 return false;
@@ -85,32 +85,7 @@ namespace CarSharing.ModelServices
 
         public void CustomerAddToDataBase(Customer customer)
         {
-            _context.Customers.Add(customer);
-            _context.SaveChanges();
-        }
-
-        public Customer FindCustomerViaLogin(string login)
-        {
-            Customer? customer = _context.Customers.FirstOrDefault(c => c.login == login);
-            return customer;
-        }
-
-        public Customer FindCustomerViaEmail(string email)
-        {
-            Customer? customer = _context.Customers.FirstOrDefault(c => c.email == email);
-            return customer;
-        }
-
-        public Customer FindCustomerViaId(int id)
-        {
-            Customer? customer = _context.Customers.FirstOrDefault(c => c.id == id);
-            return customer;
-        }
-
-        public Customer FindCustomerViaCookie(double cookieId)
-        {
-            Customer? customer = _context.Customers.FirstOrDefault(c => c.cookieId == cookieId);
-            return customer;
+            _customerRepository.AddUser(customer);
         }
 
         public Customer RegisterViewModelToCustomerTransfer(RegisterViewModel registerCustomer)

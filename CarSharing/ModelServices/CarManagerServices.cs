@@ -4,51 +4,48 @@ using CarSharing.Models.ViewModels;
 using CarSharing.Models.DataBaseModels;
 using Microsoft.EntityFrameworkCore;
 using CarSharing.Models.Errors;
+using CarSharing.Repositories;
+using CarSharing.Factories;
+using CarSharing.Models.Repositories;
 
 namespace CarSharing.ModelServices
 {
     public class CarManagerServices
     {
-        public List<CarViewModel> carListViewModel = new List<CarViewModel>();
-        private CarSharingContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public ListOfCars CarList = new ListOfCars();
-        public Car car = new();
+        private ICustomerRepository _customerRepository;
+        private ICarRepository _carRepository;
+        private IReservationRepository _reservationRepository;
 
         public CarManagerServices(IHttpContextAccessor httpContextAccessor, CarSharingContext context)
         {
+            CustomerRepoFactory _customerRepoFactory = CustomerRepoFactory.Instance();
+            CarRepoFactory _carRepoFactory = CarRepoFactory.Instance();
+            ReservationRepoFactory _reservationRepoFactory = ReservationRepoFactory.Instance();
+            _reservationRepository = _reservationRepoFactory.Build(context);
+            _carRepository = _carRepoFactory.Build(context);
+            _customerRepository = _customerRepoFactory.Build(context);
             _httpContextAccessor = httpContextAccessor;
-            _context = context;
-        }
-
-        private bool CheckCookie()
-        {
-            return _httpContextAccessor.HttpContext.Request.Cookies["Session_Id"] != null;
         }
 
         public bool AdminCheck()
         {
-            if (CheckCookie())
+            if (_httpContextAccessor.HttpContext.Request.Cookies["Session_Id"] != null)
             {
                 var cookieString = _httpContextAccessor.HttpContext.Request.Cookies["Session_Id"].ToString();
-                var currentUser = _context.Customers.FirstOrDefault(x => x.cookieId == double.Parse(cookieString));
-                return currentUser.adminAccount;
+                return _customerRepository.CheckAdminAccount(cookieString);
             }
             else
             {
                 return false;
             }
-            return true;
         }
 
         public List<CarViewModel> GetListOfCars()
         {
-            CarList.listOfCars = _context.Cars.ToList();
-            Car car = new Car();
-            car.relations.AddRange(_context.Relations
-                .Include(c => c.car)
-                .Include(r => r.reservation)
-                .Include(cu => cu.customer));
+            ListOfCars CarList = new ListOfCars();
+            List<CarViewModel> carListViewModel = new List<CarViewModel>();
+            CarList = _carRepository.GetCars();
             foreach (var singleCar in CarList.listOfCars)
             {
                 CarViewModel singleCarViewModel = new();
@@ -74,29 +71,17 @@ namespace CarSharing.ModelServices
 
         public void RemoveCar(int carId)
         {
-            var selectedCar = _context.Cars.FirstOrDefault(x => x.id == carId);
-            _context.Remove(selectedCar);
-            _context.SaveChanges();
+            _carRepository.RemoveCar(carId);
         }
 
         public void DeleteReservation(int reservationId)
         {
-            var selectedCar = _context.Reservations.FirstOrDefault(x => x.id == reservationId);
-            _context.Remove(selectedCar);
-            _context.SaveChanges();
+            _reservationRepository.RemoveReservation(reservationId);
         }
 
         public void AddCar(CarViewModel car)
         {
-            Car dataBaseCar = new Car();
-            dataBaseCar.id = car.id;
-            dataBaseCar.model = car.model;
-            dataBaseCar.brand = car.brand;
-            dataBaseCar.additionalEquipment = car.additionalEquipment;
-            dataBaseCar.color = car.color;
-            dataBaseCar.engine = car.engine;
-            _context.Cars.Add(dataBaseCar);
-            _context.SaveChanges();
+            _carRepository.AddCar(car.color, car.engine, car.model, car.brand, car.additionalEquipment);
         }
 
         public bool ValidateAddingCar(CarViewModel car)
@@ -133,10 +118,5 @@ namespace CarSharing.ModelServices
             }
             return true;
         }
-
-
-
-
-
     }
 }
